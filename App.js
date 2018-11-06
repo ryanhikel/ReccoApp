@@ -6,13 +6,17 @@ import Loading from './Loading'
 import SignUp from './SignUp'
 import Login from './Login'
 import Main from './Main'
+import Categories from './Categories'
+import Following from "./Following";
 // create our app's navigation stack
 const App = SwitchNavigator(
   {
     Loading,
     SignUp,
     Login,
-    Main
+    Main,
+    Categories,
+    Following
   },
   {
     initialRouteName: 'Loading'

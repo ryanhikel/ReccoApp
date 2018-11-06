@@ -1,7 +1,14 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import firebase from 'react-native-firebase'
+import {
+  LoginManager,
+  LoginButton,
+  AccessToken
+} from "react-native-fbsdk";
+
 export default class SignUp extends React.Component {
+
   state = { email: '', password: '', errorMessage: null }
   handleSignUp = () => {
     firebase
@@ -34,6 +41,31 @@ export default class SignUp extends React.Component {
           value={this.state.password}
         />
         <Button title="Sign Up" onPress={this.handleSignUp} />
+         < LoginButton
+         onLoginFinished = {
+           (error, result) => {
+             if (error) {
+               console.log("login has error: " + result.error);
+             } else if (result.isCancelled) {
+               console.log("login is cancelled.");
+             } else {
+               AccessToken.getCurrentAccessToken()
+                 .then(data => {
+                   console.log(data.accessToken.toString());
+                 })
+                 .then(() =>
+                   this.props.navigation.navigate("Categories")
+                 );
+             }
+           }
+         }
+         onLogoutFinished = {
+           () => {
+             console.log("logout.")
+             this.props.navigation.navigate('Login')
+           }
+         }
+         />
         <Button
           title="Already have an account? Login"
           onPress={() => this.props.navigation.navigate('Login')}

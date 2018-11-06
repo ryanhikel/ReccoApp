@@ -1,55 +1,53 @@
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View, Button } from 'react-native'
+import { StyleSheet, Platform, Image, Text, View, Button, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
-import {
-  LoginManager,
-  LoginButton,
-  AccessToken
-} from "react-native-fbsdk";
+import { Header, Icon } from "react-native-elements";
+import CategoryBox from './CategoryBox';
 
 export default class Main extends React.Component {
-  state = { currentUser: null }
-  componentDidMount() {
-    const { currentUser } = firebase.auth()
-    this.setState({ currentUser })
-  }
+
   handleLogOut = () => {
     firebase
       .auth()
       .signOut()
-      .then(() => this.props.navigation.navigate('Main'))
+      .then(() => this.props.navigation.navigate('Login'))
       .catch(error => this.setState({ errorMessage: error.message }))
   }
+
+
+
   render() {
-    const { currentUser } = this.state
+
     return (
       <View style={styles.container}>
-        <Text>
-          Hi {currentUser && currentUser.email}!
-        </Text>
+      < Header
+      outerContainerStyles = {styles.outerContainerStyles}
+      innerContainerStyles = {styles.innerContainerStyles}
+      leftComponent = {
+       < Icon
+       name = 'arrow-left'
+       type = 'simple-line-icon'
+        />
+
+      }
+      centerComponent = {
+        {
+          text: 'Select Categories',
+          style: {
+            color: '#fff'
+          }
+        }
+      }
+      rightComponent = {
+                 < Icon
+                 name = 'arrow-right'
+                 type = 'simple-line-icon'
+                  />
+      }
+      />
+
         <Button title="Log Out" onPress={this.handleLogOut} />
-         {/* < LoginButton
-         onLoginFinished = {
-           (error, result) => {
-             if (error) {
-               console.log("login has error: " + result.error);
-             } else if (result.isCancelled) {
-               console.log("login is cancelled.");
-             } else {
-               AccessToken.getCurrentAccessToken()
-                 .then(data => {
-                   console.log(data.accessToken.toString());
-                 })
-                 .then(() =>
-                   this.props.navigation.navigate("Main")
-                 );
-             }
-           }
-         }
-         onLogoutFinished = {
-           () => console.log("logout.")
-         }
-         /> */}
+
       </View>
     )
   }
@@ -57,7 +55,15 @@ export default class Main extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+
+  },
+  outerContainerStyles: {
+    width: Dimensions.get('window').width,
+
+  },
+  innerContainerStyles:{
     alignItems: 'center'
   }
 })

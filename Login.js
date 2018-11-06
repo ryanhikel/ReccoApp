@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import firebase from 'react-native-firebase'
 import { LoginManager, LoginButton, AccessToken } from "react-native-fbsdk";
 export default class Login extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
+  state = { email: '', password: '', errorMessage: null, fbUser: "" }
   handleLogin = () => {
     const email = this.state.email;
     const password = this.state.password;
@@ -68,7 +68,8 @@ export default class Login extends React.Component {
               } else {
                 AccessToken.getCurrentAccessToken()
                   .then(data => {
-                    console.log(data.accessToken.toString());
+                    this.setState({fbUser: data});
+                    console.log(this.state.fbUser)
                   })
                   .then(() =>
                     this.props.navigation.navigate("Main")
