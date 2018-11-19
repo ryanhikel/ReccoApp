@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import firebase from "react-native-firebase";
 import { Header, Icon, ListItem, CheckBox } from "react-native-elements";
+import SingleFollower from "./SingleFollower"
 // import {AccessToken, GraphRequest} from 'react-native-fbsdk'
 export default class Following extends React.Component {
 
@@ -93,13 +94,6 @@ export default class Following extends React.Component {
       },
     ];
 
-    let followers = list.map((l, i) => {
-      let checked = false
-      return <ListItem containerStyle={{ width: Dimensions.get("window").width }} onPress={() => {
-        return !checked
-      }}  rightIcon={<CheckBox containerStyle = {{borderColor: '#fff', backgroundColor:'#fff'}} checked={!checked} />} key={i} leftAvatar={{ source: { uri: l.avatar_url } }} title={l.name} subtitle={l.subtitle} />;
-        })
-
     return (
       <View style={styles.container}>
         <Header
@@ -116,13 +110,16 @@ export default class Following extends React.Component {
             <Icon
               name="arrow-right"
               type="simple-line-icon"
-              onPress={this.props.navigation.navigate("Following")}
+              onPress={() => {this.props.navigation.navigate("Following")}}
             />
           }
         />
 
         <ScrollView>
-{followers}
+          {
+            list.map((l, i) => { return <SingleFollower followers = {l} key = {i} />
+            })
+          }
         </ScrollView>
       </View>
     );
