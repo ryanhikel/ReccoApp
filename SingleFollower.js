@@ -4,6 +4,7 @@ import {
   Dimensions,
 } from "react-native";
 import { ListItem, CheckBox } from "react-native-elements";
+// import Video from "react-native-video";
 export default class SingleFollower extends React.Component {
   state = {
     checked: true
@@ -12,12 +13,14 @@ export default class SingleFollower extends React.Component {
   render() {
 
       return (
+
         <ListItem
           containerStyle={{
             width: Dimensions.get("window").width
           }}
-          onPress={() => {
+          onPress={(e) => {
             this.setState({checked: !this.state.checked});
+
           }}
           rightIcon={
             <CheckBox
@@ -27,7 +30,7 @@ export default class SingleFollower extends React.Component {
               }}
               checked={this.state.checked}
               onPress={() => {
-                this.setState({ checked: !this.state.checked });
+                this.setState({ checked: !this.state.checked })
               }}
             />
           }
@@ -35,6 +38,16 @@ export default class SingleFollower extends React.Component {
           title={this.props.followers.name}
           subtitle={this.props.followers.subtitle}
         />
+
+        // <Video source={{ uri: "oculus" }}   // Can be a URL or a local file.
+        //   ref={(ref) => {
+        //     this.player = ref
+        //   }}                                      // Store reference
+        //   onBuffer={this.onBuffer}                // Callback when remote video is buffering
+        //   onEnd={this.onEnd}                      // Callback when playback finishes
+        //   onError={this.videoError}               // Callback when video cannot be loaded
+        //   style={styles.backgroundVideo} />
+
       );
   }
 }
@@ -49,5 +62,12 @@ const styles = StyleSheet.create({
   },
   innerContainerStyles: {
     alignItems: "center"
-  }
+  },
+  backgroundVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
 });
