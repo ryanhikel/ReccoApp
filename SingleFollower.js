@@ -28,7 +28,7 @@ export default class SingleFollower extends React.Component {
                 borderColor: "#fff",
                 backgroundColor: "#fff"
               }}
-              checked={this.state.checked}
+              checked={this.state.checked && this.props.checked}
               onPress={() => {
                 this.setState({ checked: !this.state.checked })
               }}
